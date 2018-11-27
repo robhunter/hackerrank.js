@@ -44,7 +44,7 @@ function main () {
   } else {
     console.log(term.FgRed, "You must specify the output format of your code.");
     console.log(term.FgRed, "Usage: node " + process.argv[1] + " challenges/CHALLENGE-NAME [--console|--file|--stdout]");
-    process.exit(1);
+    exit();
   }
   
   // get input & output file names
@@ -92,7 +92,7 @@ function main () {
         }
         console.log(term.FgRed, " Failed (" + failures.length + "):", failures.join(", "));
       }
-      console.log();
+      console.log(term.Reset);
     });
 }
 
@@ -103,7 +103,7 @@ function checkArgs () {
       term.FgRed,
       "Usage: node " + process.argv[1] + " challenges/CHALLENGE-NAME [--console|--file|--stdout]"
     );
-    process.exit(1);
+    exit();
   }
 
   if (process.argv.length < 4) {
@@ -115,7 +115,7 @@ function checkArgs () {
       term.FgRed,
       "Usage: node " + process.argv[1] + " challenges/CHALLENGE-NAME [--console|--file|--stdout]"
     );
-    process.exit(1);
+    exit();
   }
 }
 
@@ -134,7 +134,7 @@ function compareIO(inputFileNames, outputFileNames) {
       term.FgRed,
       "Error: number of inputs does not match number of outputs."
     );
-    process.exit(1);
+    exit();
   }
 }
 
@@ -196,4 +196,9 @@ function runTestcase (testcase) {
       }
     });
   });
+}
+
+function exit() {
+  console.log(term.Reset);
+  process.exit(1);
 }
