@@ -25,7 +25,7 @@ function readLine() {
 // Complete the countApplesAndOranges function below.
 function countApplesAndOranges(s, t, a, b, apples, oranges) {
   console.log(1);
-  console.log(1);
+  console.log(2);
 
 }
 

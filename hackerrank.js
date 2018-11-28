@@ -165,11 +165,15 @@ function runTestcase (testcase) {
     let child = fork(testcase.script, [], args);
 
     let result = "";
-    if (stdout) {
-      child.stdout.on('data', function (data) {
+    let debugging = "";
+    
+    child.stdout.on('data', function (data) {
+      if (stdout) {
         result += data.toString();
-      });
-    }
+      } else {
+        debugging += data.toString();
+      }
+    });
 
     child.stdin.setEncoding("utf-8");
     child.stdin.write(testcase.input);
@@ -190,8 +194,14 @@ function runTestcase (testcase) {
         resolve(true);
       } else {
         spinner.fail();
-        console.log(term.FgRed, " - Expected Output:", JSON.stringify(testcase.output.replace(/\n/g, "")));
-        console.log(term.FgRed, " - Your Output:    ", JSON.stringify(outcome.replace(/\n/g, "")));
+        // console.log(term.FgRed, " - Expected Output:", JSON.stringify(testcase.output.replace(/\n/g, "")));
+        // console.log(term.FgRed, " - Your Output:    ", JSON.stringify(outcome.replace(/\n/g, "")));
+        console.log(term.FgRed, " - Expected Output:");
+        console.log(term.FgRed, testcase.output);
+        console.log(term.FgRed, " - Your Output:    ");
+        console.log(term.FgRed, outcome);
+
+        console.log(term.Reset, " - Debugging Output: " + debugging);
         resolve(false);
       }
     });
