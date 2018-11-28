@@ -185,13 +185,13 @@ function runTestcase (testcase) {
         ? fs.readFileSync(testcase.resultFile, "utf8").toString()
         : result;
 
-      if (outcome.replace("\n", "") == testcase.output.replace("\n", "")) {
+      if (outcome.replace(/\n/g, "") == testcase.output.replace(/\n/g, "")) {
         spinner.succeed();
         resolve(true);
       } else {
         spinner.fail();
-        console.log(term.FgRed, " - Expected Output:", testcase.output.replace("\n", ""));
-        console.log(term.FgRed, " - Your Output:    ", outcome.replace("\n", ""));
+        console.log(term.FgRed, " - Expected Output:", JSON.stringify(testcase.output.replace(/\n/g, "")));
+        console.log(term.FgRed, " - Your Output:    ", JSON.stringify(outcome.replace(/\n/g, "")));
         resolve(false);
       }
     });
